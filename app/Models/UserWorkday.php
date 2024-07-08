@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class UserWorkday extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'employee_id',
+        'workday_id',
+        'user_id'
+    ];
 }

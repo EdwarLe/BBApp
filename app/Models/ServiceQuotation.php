@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class ServiceQuotation extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'service_id',
+        'quotation_id'
+    ];
 }

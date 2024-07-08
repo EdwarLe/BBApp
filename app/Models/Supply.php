@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class supply extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'suply_name',
+        'quantity',
+        'price',
+        'change_measurement',
+        'user_id'
+    ];
 }

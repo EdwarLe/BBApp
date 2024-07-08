@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Miscellaneous extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'miscellaneous_name',
+        'quantity',
+        'price',
+        'change_measurement',
+        'user_id'
+    ];
 }
