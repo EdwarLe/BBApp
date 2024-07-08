@@ -12,7 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('workdays', function (Blueprint $table) {
-            $table->id();
+            $table->id('workday_id');
+            $table->timestamp('date_start')->useCurrent();
+            $table->timestamp('lunch_star')->useCurrent();
+            $table->timestamp('lunch_end')->useCurrent();
+            $table->timestamp('date_end')->useCurrent();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }
