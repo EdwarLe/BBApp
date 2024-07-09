@@ -12,13 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sales', function (Blueprint $table) {
-            $table->id('sale_id');
+            $table->id('id');
             $table->timestamp('start_date')->useCurrent();
             $table->timestamp('end_date')->useCurrent();
-            $table->integer('quotation_id');
             $table->float('advance');
             $table->float('remaining_payment');
-            $table->integer('user_id');
+
+            $table->foreignId('quotation_id')->constrained()->onDelete('cascade');
+
+
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+
             $table->timestamps();
         });
     }

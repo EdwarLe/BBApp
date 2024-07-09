@@ -12,12 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('services', function (Blueprint $table) {
-            $table->id('service_id');
+            $table->id('id');
             $table->string('service_name');
             $table->integer('quantity');
             $table->float('price');
             $table->string('currency');
-            $table->integer('user_id');
+
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }

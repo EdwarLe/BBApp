@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('miscellaneouses', function (Blueprint $table) {
+        Schema::create('quotation_users', function (Blueprint $table) {
             $table->id('id');
-            $table->string('miscellaneous_name');
-            $table->float('quantity');
-            $table->float('price');
-            $table->string('change_measurement');
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
+            $table->foreignId('quotation_id')->constrained()->onDelete('cascade');;
 
             $table->timestamps();
         });
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('miscellaneouses');
+        Schema::dropIfExists('quotation_users');
     }
 };

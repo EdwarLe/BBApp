@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('quotations', function (Blueprint $table) {
-            $table->id('quotation_id');
-            $table->integer('client_id');
+            $table->id('id');
             $table->string('company_name');
             $table->integer('quantity');
             $table->text('description');
-            $table->integer('service_id');
             $table->float('price');
             $table->float('advance_percentage');
             $table->float('remaining_percentage');
-            $table->boolean('is_sales');
-            $table->integer('user_id');
+            $table->boolean('is_sales')->default(false);
+
+            $table->foreignId('client_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }

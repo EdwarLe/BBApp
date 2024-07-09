@@ -12,10 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('user_workdays', function (Blueprint $table) {
-            $table->id('user_workday_id');
-            $table->integer('employee_id');
-            $table->integer('workday_id');
-            $table->integer('user_id');
+            $table->id('id');
+
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+
+            $table->foreignId('employee_id')->constrained()->onDelete('cascade');
+
+            $table->foreignId('workday_id')->constrained()->onDelete('cascade');
+
             $table->timestamps();
         });
     }

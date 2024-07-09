@@ -12,9 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('service_quotations', function (Blueprint $table) {
-            $table->id('service_quotation_id');
-            $table->integer('service_id');
-            $table->integer('quotation_id');
+            $table->id('id');
+
+            $table->foreignId('service_id')->constrained()->onDelete('cascade');
+
+            $table->foreignId('quotation_id')->constrained()->onDelete('cascade');
+
+
             $table->timestamps();
         });
     }
