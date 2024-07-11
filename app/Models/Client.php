@@ -9,11 +9,11 @@ class Client extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'client_name',
-        'surname',
-        'phone_number',
-        'address',
-        'company_name'
-    ];
+    public $table = "client";
+    protected $fillable = array("*");
+
+    public function quotations()
+    {
+        return $this->hasMany(Quotation::class);
+    }
 }

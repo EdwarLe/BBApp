@@ -9,12 +9,16 @@ class Sales extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'start_date',
-        'end_date',
-        'quotation_id',
-        'advance',
-        'remaining_payment',
-        'user_id'
-    ];
+    public $table = "sales";
+    protected $fillable = array("*");
+
+    public function quotation()
+    {
+        return $this->belongsTo(Quotation::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -9,11 +9,11 @@ class Miscellaneous extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'miscellaneous_name',
-        'quantity',
-        'price',
-        'change_measurement',
-        'user_id'
-    ];
+    public $table = "miscellaneou";
+    protected $fillable = array("*");
+
+    public function user()
+    {
+        return $this->belongsToMany(User::class, "miscellaneous_users");
+    }
 }

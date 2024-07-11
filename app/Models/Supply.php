@@ -9,11 +9,11 @@ class supply extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'suply_name',
-        'quantity',
-        'price',
-        'change_measurement',
-        'user_id'
-    ];
+    public $table = "supply";
+    protected $fillable = ("*");
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, "supply_users");
+    }
 }

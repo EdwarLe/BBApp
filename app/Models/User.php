@@ -16,12 +16,38 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'role'
-    ];
+    public $table = "user";
+    protected $fillable = array("*");
+
+    public function miscellaneous()
+    {
+        return $this->belongsToMany(Miscellaneous::class, "miscellaneous_users");
+    }
+
+    public function quotations()
+    {
+        return $this->belongsToMany(Quotation::class, "quotation_users");
+    }
+
+    public function sales()
+    {
+        return $this->hasMany(sales::class);
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, "service_users");
+    }
+
+    public function supplies()
+    {
+        return $this->belongsToMany(supply::class, "supply_users");
+    }
+
+    public function workdays()
+    {
+        return $this->belongsToMany(Workday::class, "user_workdays");
+    }
 
     /**
      * The attributes that should be hidden for serialization.

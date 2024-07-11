@@ -9,16 +9,26 @@ class Quotation extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'client_id',
-        'company_name',
-        'quantity',
-        'description',
-        'service_id',
-        'price',
-        'advance_percentage',
-        'remaining_percentage',
-        'is_sales',
-        'user_id'
-    ];
+    public $table = "quotation";
+    protected $fillable = array("*");
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function sale()
+    {
+        return $this->hasOne(Sales::class);
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class, "servie_quotations");
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, "quotation_users");
+    }
 }
