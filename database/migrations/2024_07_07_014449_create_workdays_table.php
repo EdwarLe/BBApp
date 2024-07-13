@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('workdays', function (Blueprint $table) {
             $table->id('id');
             $table->timestamp('date_start')->useCurrent();
-            $table->timestamp('lunch_star')->useCurrent();
+            $table->timestamp('lunch_start')->useCurrent();
             $table->timestamp('lunch_end')->useCurrent();
             $table->timestamp('date_end')->useCurrent();
             $table->timestamps();

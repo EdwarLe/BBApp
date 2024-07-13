@@ -9,11 +9,17 @@ class Employee extends Model
 {
     use HasFactory;
 
-    public $table = "employee";
-    protected $fillable = ("*");
+    protected $fillable = [
+        'job',
+        'first_name',
+        'surname',
+        'id_type',
+        'id_number',
+        'salary'
+    ];
 
     public function workdays()
     {
-        return $this->belongsToMany(Quotation::class, "user_workdays");
+        return $this->belongsToMany(Workday::class, "user_workdays");
     }
 }

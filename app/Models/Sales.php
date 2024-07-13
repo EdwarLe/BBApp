@@ -9,16 +9,15 @@ class Sales extends Model
 {
     use HasFactory;
 
-    public $table = "sales";
     protected $fillable = array("*");
 
     public function quotation()
     {
-        return $this->belongsTo(Quotation::class);
+        return $this->belongsTo('App\Models\Quotation');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo('App\Models\User');
     }
 }

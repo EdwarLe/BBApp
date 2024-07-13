@@ -5,12 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class supply extends Model
+class Supply extends Model
 {
     use HasFactory;
 
-    public $table = "supply";
-    protected $fillable = ("*");
+    protected $fillable = [
+        'supply_name',
+        'quantity',
+        'price',
+        'change_measurement',
+        'user_id'
+    ];
 
     public function users()
     {

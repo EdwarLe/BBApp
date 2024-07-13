@@ -9,7 +9,6 @@ class Miscellaneous extends Model
 {
     use HasFactory;
 
-    public $table = "miscellaneou";
     protected $fillable = array("*");
 
     public function user()

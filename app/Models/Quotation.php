@@ -9,22 +9,21 @@ class Quotation extends Model
 {
     use HasFactory;
 
-    public $table = "quotation";
     protected $fillable = array("*");
 
     public function client()
     {
-        return $this->belongsTo(Client::class);
+        return $this->belongsTo('App\Models\Client');
     }
 
     public function sale()
     {
-        return $this->hasOne(Sales::class);
+        return $this->hasOne('App\Models\Sales');
     }
 
     public function services()
     {
-        return $this->belongsToMany(Service::class, "servie_quotations");
+        return $this->belongsToMany(Service::class, "service_quotations");
     }
 
     public function users()

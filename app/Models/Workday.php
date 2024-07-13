@@ -9,8 +9,12 @@ class Workday extends Model
 {
     use HasFactory;
 
-    public $table = "workday";
-    protected $fillable = ("*");
+    protected $fillable = [
+        'date_start',
+        'lunch_start',
+        'lunch_end',
+        'date_end'
+    ];
 
     public function employees()
     {

@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id('id');
-            $table->string('company_name');
             $table->integer('quantity');
             $table->text('description');
             $table->float('price');

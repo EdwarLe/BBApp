@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('supplies', function (Blueprint $table) {
             $table->id('id');
-            $table->string('suply_name');
+            $table->string('supply_name');
             $table->float('quantity');
             $table->float('price');
             $table->string('change_measurement');

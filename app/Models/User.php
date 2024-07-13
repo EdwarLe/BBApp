@@ -16,8 +16,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    public $table = "user";
-    protected $fillable = array("*");
+
+    protected $fillable = [
+        'name',
+        'surname',
+        'email',
+        'password',
+        'role'
+    ];
 
     public function miscellaneous()
     {
@@ -31,7 +37,7 @@ class User extends Authenticatable
 
     public function sales()
     {
-        return $this->hasMany(sales::class);
+        return $this->hasMany('App\Models\Sales');
     }
 
     public function services()
@@ -41,7 +47,7 @@ class User extends Authenticatable
 
     public function supplies()
     {
-        return $this->belongsToMany(supply::class, "supply_users");
+        return $this->belongsToMany(Supply::class, "supply_users");
     }
 
     public function workdays()

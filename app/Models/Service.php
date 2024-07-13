@@ -9,16 +9,21 @@ class Service extends Model
 {
     use HasFactory;
 
-    public $table = "service";
-    protected $fillable = ("*");
+    protected $fillable = [
+        'service_name',
+        'quantity',
+        'price',
+        'currency',
+        'user_id'
+    ];
 
     public function quotations()
     {
-        return $this->belongsToMany(Quotation::class, "servie_quotations");
+        return $this->belongsToMany(Quotation::class, "service_quotations");
     }
 
     public function users()
     {
-        return $this->belongsToMany(User::class, "servie_users");
+        return $this->belongsToMany(User::class, "service_users");
     }
 }
