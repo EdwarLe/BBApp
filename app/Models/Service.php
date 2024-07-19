@@ -14,7 +14,8 @@ class Service extends Model
         'quantity',
         'price',
         'currency',
-        'user_id'
+        'user_id',
+        'id'
     ];
 
     public function quotations()
