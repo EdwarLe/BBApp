@@ -4,12 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Quotation extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $fillable = array("*");
+    protected $fillable = [
+        'quantity',
+        'description',
+        'price',
+        'advance_percentage',
+        'remaining_percentage',
+        'is_sales',
+        'client_id',
+    ];
 
     public function client()
     {

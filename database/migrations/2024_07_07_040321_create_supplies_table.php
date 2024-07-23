@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('change_measurement');
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->softDeletes();
 
 
             $table->timestamps();

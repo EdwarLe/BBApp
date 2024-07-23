@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('is_sales')->default(false);
 
             $table->foreignId('client_id')->constrained()->onDelete('cascade');
+            $table->softDeletes();
 
             $table->timestamps();
         });

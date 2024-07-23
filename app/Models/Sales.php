@@ -9,7 +9,14 @@ class Sales extends Model
 {
     use HasFactory;
 
-    protected $fillable = array("*");
+    protected $fillable = [
+        'start_date',
+        'end_date',
+        'advance',
+        'remaining_payment',
+        'quotation_id',
+        'user_id',
+    ];
 
     public function quotation()
     {

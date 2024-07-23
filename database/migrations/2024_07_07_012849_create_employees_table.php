@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('id_number');
             $table->float('salary');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
