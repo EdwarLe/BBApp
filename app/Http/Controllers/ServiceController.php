@@ -86,8 +86,20 @@ class ServiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Service $service)
+    public function destroy($id)
     {
-        //
+        $service = Service::find($id);
+
+        if (!empty($service)) {
+            $service->delete();
+            return response()->json([
+                'message' => 'Servicio eliminado correctamente'
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Servicio no encontrado'
+        ]);
     }
 }

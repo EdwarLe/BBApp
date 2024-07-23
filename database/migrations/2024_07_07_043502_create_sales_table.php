@@ -13,16 +13,14 @@ return new class extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->id('id');
-            $table->timestamp('start_date')->useCurrent();
-            $table->timestamp('end_date')->useCurrent();
+            $table->date('start_date')->useCurrent();
+            $table->date('end_date')->useCurrent();
             $table->float('advance');
             $table->float('remaining_payment');
 
             $table->foreignId('quotation_id')->constrained()->onDelete('cascade');
-
-
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-
+            $table->softDeletes();
 
             $table->timestamps();
         });

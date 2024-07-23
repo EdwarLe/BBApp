@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('lunch_end')->useCurrent();
             $table->timestamp('date_end')->useCurrent();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
