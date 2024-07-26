@@ -1,7 +1,8 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhot:8000/login'
+const BASE_URL = 'http://localhot:8000/api/v1'
 
-function getAuth() {
-
+export const postAuth = async (endPoint, dataJson) => {
+    const response = await axios.post(BASE_URL + endPoint, dataJson)
+    console.log(response)
 }

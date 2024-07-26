@@ -10,6 +10,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkdayController;
+use App\Http\Middleware\Cors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 

@@ -53,7 +53,7 @@ class AuthenticatedSessionController extends Controller
 
         // return response()->noContent();
 
-        auth()->user()->tokens()->delete();
+        auth()->user()->tokens->set()->delete();
 
         return [
             'message' => 'You have successfully logged out and the token was successfully deleted'
