@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MiscellaneousController;
@@ -104,13 +105,23 @@ Route::prefix('/v1/users')->group(function () {
     Route::delete('/delete-user/{id}', [UserController::class, 'destroy']);
 });
 
-// Workdays Routes
 
-Route::prefix('/v1/workdays')->group(function () {
-    Route::get('/', [WorkdayController::class, 'index']);
-    Route::post('/', [WorkdayController::class, 'store']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    // Workdays Routes
 
-    Route::get('/{id}', [WorkdayController::class, 'show']);
-    // Route::put('/update-user/{id}', [WorkdayController::class, 'update']);
-    // Route::delete('/delete-user/{id}', [WorkdayController::class, 'destroy']);
+    Route::prefix('/v1/workdays')->group(function () {
+        Route::get('/', [WorkdayController::class, 'index']);
+        Route::post('/', [WorkdayController::class, 'store']);
+
+        Route::get('/{id}', [WorkdayController::class, 'show']);
+    });
+
+    Route::get('/v1/logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->middleware('auth')
+        ->name('logout');
 });
+
+
+Route::post('/v1/login', [AuthenticatedSessionController::class, 'store'])
+    ->middleware('guest')
+    ->name('login');
