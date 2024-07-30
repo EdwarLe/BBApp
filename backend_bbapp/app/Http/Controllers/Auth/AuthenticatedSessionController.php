@@ -16,6 +16,8 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+
+
         // $request->authenticate();
 
         // $request->session()->regenerate();
@@ -24,7 +26,8 @@ class AuthenticatedSessionController extends Controller
 
         if (!Auth::attempt($request->only('email', 'password'))) {
             return response()->json([
-                'message' => 'Unauthorized'
+                'message' => 'Unauthorized',
+                'status' => false
             ], 401);
         }
 
