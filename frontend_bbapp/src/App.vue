@@ -1,11 +1,11 @@
 <template>
-  <main class="bg-slate-100 min-h-screen w-full p-3 flex items-center">
-    <Login></Login>
+  <main class="bg-zinc-50 min-h-screen w-full flex items-center max-w-[1480px] mx-auto">
+    <RouterView></RouterView>
   </main>
 </template>
 
 <script setup>
-  import Login from './components/Login.vue';
+  import { RouterView } from 'vue-router';
 </script>
 
   

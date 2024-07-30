@@ -10,6 +10,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SupplyController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkdayController;
+use App\Http\Middleware\Cors;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -116,12 +117,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::get('/{id}', [WorkdayController::class, 'show']);
     });
 
-    Route::get('/v1/logout', [AuthenticatedSessionController::class, 'destroy'])
+    Route::get('/v1/auth/logout', [AuthenticatedSessionController::class, 'destroy'])
         ->middleware('auth')
         ->name('logout');
 });
 
 
-Route::post('/v1/login', [AuthenticatedSessionController::class, 'store'])
+Route::post('/v1/auth/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest')
     ->name('login');

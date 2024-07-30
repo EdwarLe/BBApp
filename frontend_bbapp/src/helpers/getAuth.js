@@ -1,7 +1,26 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhot:8000/login'
+const BASE_URL = 'http://localhost:8000/api/v1'
 
-function getAuth() {
+export const postAuth = async (endPoint, dataJson) => {
+    const uri = BASE_URL + endPoint
+
+    try {
+        const { data } = await axios.post(uri, dataJson)
+        return {
+            dataUser: data,
+            status: false
+        }
+    } catch (error) {
+        if (!error.response.data.status) {
+            return {
+                message: 'Usuario o contraseña errado',
+                status: true
+            }
+        }
+
+    }
+
+
 
 }
