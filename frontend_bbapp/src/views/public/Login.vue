@@ -39,12 +39,14 @@ const feedback = ref('')
 
 
 const loginUser = async () => {
+
+  feedback.value = 'Sending...'
   const response = await store.login('/auth/login', userLogin.value)
   
   if(!response) {
     feedback.value = 'Usuario o contraseña inválido'
   } else {
-    router.push({ name: 'dashboard'})
+    router.push({ name: 'main'})
   }
 }
 

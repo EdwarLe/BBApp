@@ -44,7 +44,7 @@ const useAuth = defineStore('auth', {
         storage: sessionStorage,
         paths: [
             'token',
-
+            'userData'
         ]
     }
 })
