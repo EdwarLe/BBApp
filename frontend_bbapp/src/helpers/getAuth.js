@@ -18,9 +18,16 @@ export const postAuth = async (endPoint, dataJson) => {
                 status: true
             }
         }
-
     }
+}
 
+export const getAuth = async (endPoint) => {
+    const uri = BASE_URL + endPoint
 
-
+    try {
+        const { data } = await axios.get(uri)
+        console.log(data)
+    } catch (error) {
+        console.log(error)
+    }
 }
