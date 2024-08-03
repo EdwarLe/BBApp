@@ -1,4 +1,5 @@
 import axios from 'axios'
+import useClientsData from '../store/clientsData'
 
 const BASE_URL = 'http://localhost:8000/api/v1'
 
@@ -21,13 +22,20 @@ export const postAuth = async (endPoint, dataJson) => {
     }
 }
 
-export const getAuth = async (endPoint) => {
+export const getData = async (endPoint) => {
     const uri = BASE_URL + endPoint
 
     try {
         const { data } = await axios.get(uri)
-        console.log(data)
+        return {
+            data,
+            status: true
+        }
     } catch (error) {
         console.log(error)
+        return {
+            status: false,
+            msg: error
+        }
     }
 }

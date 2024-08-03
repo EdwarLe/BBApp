@@ -21,9 +21,9 @@
 import useAuth from '../store/auth';
 
 const store = useAuth()
-const userNameLoged = store.userData.userName
-const userSurnameLoged = store.userData.userSurname
-const userRoleLoged = store.userData.userRole
+const userNameLoged = store.userData.name
+const userSurnameLoged = store.userData.surname
+const userRoleLoged = store.userData.role
 
 const roleInPage = userRoleLoged === 0 ? 'superAdmin' : userRoleLoged === 1 ? 'Adminnistrador' : 'Vendedor'
 

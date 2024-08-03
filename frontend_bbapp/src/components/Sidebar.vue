@@ -7,7 +7,7 @@
         <router-link to='customers' :onclick="collapseMenu">Clientes</router-link>
         <router-link to='quotations' :onclick="collapseMenu">Cotizaciones</router-link>
         <router-link to='sales' :onclick="collapseMenu">Ventas</router-link>
-        <router-link to='miscellaneous' :onclick="collapseMenu">Costos Eventuales</router-link>
+        <router-link to='miscellaneous' :onclick="collapseMenu">Gastos Eventuales</router-link>
         <router-link to='supplies' :onclick="collapseMenu">Suministros</router-link>
         <router-link to='services' :onclick="collapseMenu">Servicios</router-link>
         <router-link to='employees' :onclick="collapseMenu">Colaboradores</router-link>
