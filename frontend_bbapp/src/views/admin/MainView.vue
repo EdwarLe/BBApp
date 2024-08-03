@@ -11,15 +11,18 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
 import Navbar from '../../components/Navbar.vue';
 import Sidebar from '../../components/Sidebar.vue'
 import useAuth from '../../store/auth';
 
 const store = useAuth()
 
-const nameUserLoged = store.userData.userName
-let displayNone = ''
+const nameUserLoged = store.userData.name
+
+let displayNone = ref('')
+
 setTimeout(() => {
-    displayNone = 'hidden'
+    displayNone.value = 'hidden'
 }, 300000);
 </script>

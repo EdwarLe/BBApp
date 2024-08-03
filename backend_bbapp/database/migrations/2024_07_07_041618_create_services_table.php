@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('currency');
 
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->softDeletes();
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
