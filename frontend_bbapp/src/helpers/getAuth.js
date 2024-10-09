@@ -1,5 +1,4 @@
 import axios from 'axios'
-import useClientsData from '../store/clientsData'
 
 const BASE_URL = 'http://localhost:8000/api/v1'
 
@@ -15,7 +14,7 @@ export const postAuth = async (endPoint, dataJson) => {
     } catch (error) {
         if (!error.response.data.status) {
             return {
-                message: 'Usuario o contraseña errado',
+                message: 'No hay datos para mostrar',
                 status: true
             }
         }
@@ -27,6 +26,7 @@ export const getData = async (endPoint) => {
 
     try {
         const { data } = await axios.get(uri)
+
         return {
             data,
             status: true
@@ -37,5 +37,16 @@ export const getData = async (endPoint) => {
             status: false,
             msg: error
         }
+    }
+}
+
+export const postData = async (endPoint, dataJson) => {
+    const uri = BASE_URL + endPoint
+
+    try {
+        const { data } = await axios.post(uri, dataJson)
+        return data
+    } catch (error) {
+        console.log(error)
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <section class="bg-neutral-100 w-full rounded-t-2xl overflow-hidden border-b border-slate-300">
+    <section class="bg-neutral-100 rounded-t-2xl overflow-hidden border-b border-slate-300 lg:ml-[200px]">
         <header class="h-24 w-full flex justify-around items-center p-2">
             <div class="h-4/5">
                 <img src="../../public/imgs/logo-mana.jpeg" alt="Company logo" class="h-full">
