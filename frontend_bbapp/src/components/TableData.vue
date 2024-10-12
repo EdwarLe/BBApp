@@ -1,5 +1,5 @@
 <template>
-    <table class="table table-fixed">
+    <table class="table table-fixed" :key="storeKey.keyComponent">
         <thead class=" bg-slate-200 p-8">
             <tr class="divide-x-[1px] divide-slate-300 ">
                 <th :class="styleTableHead" v-for="header in props.columnsHeader">{{ header }}</th>
@@ -21,8 +21,9 @@
 </template>
 
 <script setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, watch } from 'vue';
 import useData from '../store/fetchData';
+import useClassBoolean from '../store/classBoolean';
 
 const styleTableHead = 'text-center px-2 font-bold'
 const styleTableData = 'p-2 max-h-20'
@@ -37,12 +38,18 @@ const props = defineProps({
     
 })
 
+const storeKey = useClassBoolean()
+
 const store = useData()
 store.getDataState(props.urlGetData)
 
 
-setTimeout(() => {
-    dataToRender.value = store.data
-}, 1000);
+watch(() => store.data, (newVal) => {
+    dataToRender.value = newVal
+}, {inmediate: true})
+
+watch(() => storeKey.keyComponent, () => {
+    store.getDataState(props.urlGetData)
+})
 
 </script>

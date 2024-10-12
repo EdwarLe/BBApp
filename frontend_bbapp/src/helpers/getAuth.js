@@ -45,6 +45,7 @@ export const postData = async (endPoint, dataJson) => {
 
     try {
         const { data } = await axios.post(uri, dataJson)
+        console.log(data)
         return data
     } catch (error) {
         console.log(error)

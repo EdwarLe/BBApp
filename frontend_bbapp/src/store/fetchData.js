@@ -4,7 +4,8 @@ import { getData, postData } from '../helpers/getAuth'
 const useData = defineStore('data', {
     state: () => {
         return {
-            data: []
+            data: [],
+            dataClients: []
         }
     },
 
@@ -22,6 +23,17 @@ const useData = defineStore('data', {
 
         async postDataState(endPoint, data) {
             const dataFetch = await postData(endPoint, data)
+            console.log(dataFetch)
+        },
+
+        async getDataClients(endPoint) {
+
+            try {
+                const dataFetch = await getData(endPoint)
+                this.dataClients = await dataFetch.data
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 })
