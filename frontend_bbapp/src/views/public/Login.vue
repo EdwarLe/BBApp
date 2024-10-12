@@ -1,11 +1,11 @@
 <template>
-    <section class="bg-white w-full max-w-[800px] h-[600px] rounded-lg shadow-xl overflow-hidden mx-auto flex flex-col justify-between items-center sm:flex-row">
-      <div class="w-full h-1/3 sm:w-1/2 sm:h-full">
+    <section class="bg-slate-100 w-80 max-w-[800px] h-[600px] rounded-lg shadow-xl overflow-hidden mx-auto flex flex-col justify-between items-center sm:flex-row sm:w-full">
+      <div class="w-full h-1/3 sm:h-full sm:w-1/2">
         <img src="../../../public/imgs/chart-img.webp" alt="chart image" class="object-cover h-full w-full">
       </div>
-      <div class="p-4 mx-auto">
-        <div class="mb-8">
-          Logo
+      <div class="w-1/2 mx-auto flex flex-col justify-center items-center">
+        <div class=" w-4/5 p-2">
+          <img src="../../../public/imgs/logo-mana.jpeg" alt="logo BBAPP">
         </div>
         <h4 class="text-sky-700 font-bold text-lg text-center">
           Ingresa a tu Panel Administrativo
@@ -21,7 +21,7 @@
           </div>
           <button type="submit" class="bg-blue-900 text-white p-1 rounded-md border border-white hover:bg-white hover:text-blue-900 hover:border hover:border-blue-900 transition-colors">Ingresar</button>
           <small v-if="feedback !== ''" class="text-red-600 bg-red-300 h-9 text-center rounded-md p-2">{{ feedback }}</small>
-          <small v-else class="bg-transparent text-center rounded-md p-2 h-9"></small>
+          <small v-else class="bg-transparent hidden text-center rounded-md p-2 h-9"></small>
         </form>
       </div>
     </section>
