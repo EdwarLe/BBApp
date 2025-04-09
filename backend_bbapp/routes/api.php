@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\MiscellaneousController;
+use App\Http\Controllers\PrintProcessController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\SaleController;
 use App\Http\Controllers\ServiceController;
@@ -29,6 +31,28 @@ Route::prefix('/v1/services')->group(function () {
     Route::delete('/delete-service/{id}', [ServiceController::class, 'destroy']);
 });
 
+// Products Routes
+
+Route::prefix('/v1/products')->group(function () {
+    Route::get('/', [ProductController::class, 'index']);
+    Route::post('/', [ProductController::class, 'store']);
+
+    Route::get('/{id}', [ProductController::class, 'show']);
+    Route::put('/update-product/{id}', [ProductController::class, 'update']);
+    Route::delete('/delete-product/{id}', [ProductController::class, 'destroy']);
+});
+
+
+// Print Processes Routes
+
+Route::prefix('/v1/print-processes')->group(function () {
+    Route::get('/', [PrintProcessController::class, 'index']);
+    Route::post('/', [PrintProcessController::class, 'store']);
+
+    Route::get('/{id}', [PrintProcessController::class, 'show']);
+    Route::put('/update-print-process/{id}', [PrintProcessController::class, 'update']);
+    Route::delete('/delete-print-process/{id}', [PrintProcessController::class, 'destroy']);
+});
 // Employees Routes
 
 Route::prefix('/v1/employees')->group(function () {

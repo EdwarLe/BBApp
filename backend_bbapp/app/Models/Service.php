@@ -24,8 +24,8 @@ class Service extends Model
         return $this->belongsToMany(Quotation::class, "service_quotations");
     }
 
-    public function users()
+    public function products()
     {
-        return $this->belongsToMany(User::class, "service_users");
+        return $this->belongsToMany(Product::class, "products_services");
     }
 }

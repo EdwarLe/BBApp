@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Client;
 use App\Models\Employee;
+use App\Models\PrintProcess;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -25,13 +26,15 @@ class DatabaseSeeder extends Seeder
             SaleSeeder::class,
             ServiceSeeder::class,
             SupplySeeder::class,
+            ProductSeeder::class,
             WorkdaySeeder::class,
             UserWorkdaysSeeder::class,
             ServiceQuotationsSeeder::class,
             QuotationUsersSeeder::class,
-            ServiceUsersSeeder::class,
+            ProductUsersSeeder::class,
             SupplyUsersSeeder::class,
-            MiscellaneousUsersSeeder::class
+            MiscellaneousUsersSeeder::class,
+            PrintProcessSeeder::class
         ]);
         // User::factory(3)->create();
         // Employee::factory(10)->create();
