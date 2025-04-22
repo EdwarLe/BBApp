@@ -6,7 +6,7 @@
             <section class="w-full flex flex-col gap-4 justify-start items-start h-full overflow-y-scroll p-8 scroll-bar">
                 <p v-if="!isData">Cargando, por favor espere...</p>
                 <TableData v-else :urlGetData='endpoint' :columnsHeader='columnsHeader'/>
-                <ModalAddCustomer v-if="closeModal" @closeModal="handleCloseModal" :closeModal="closeModal" :labelData="columnsHeader" :nameModal="nameModal"/>
+                <ModalAddGeneric v-if="closeModal" @closeModal="handleCloseModal" :closeModal="closeModal" :labelData="columnsHeader" :nameModal="nameModal"/>
             </section>
         </section>
     </section>
@@ -14,7 +14,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import ModalAddCustomer from '../../components/ModalAddCustomer.vue';
+import ModalAddGeneric from '../../components/ModalAddGeneric.vue';
 import TableData from '../../components/TableData.vue';
 
 const columnsHeader = ['N°', 'Id', 'Nombre', 'Apellido', 'Teléfono', 'Dirección', 'Empresa', 'Fecha de Creación', 'Fecha de Actualización', 'Activo']
