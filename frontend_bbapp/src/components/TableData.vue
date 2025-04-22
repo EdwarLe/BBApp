@@ -83,12 +83,11 @@ const getCellValue = (row, header, rowIndex) => {
     // Para 'Activo', necesitamos la clave 'deleted_at' que SÍ está mapeada
     const value = row[dataKey]; // dataKey será 'deleted_at' cuando header sea 'Activo'
 
-    // --- ¡NUEVA LÓGICA PARA 'Activo'! ---
+    // 
     if (header === 'Activo') {
         // Si el valor de 'deleted_at' es null o undefined, está activo
         return (value === null || value === undefined) ? 'Activo' : 'Inactivo';
     }
-    // --- FIN LÓGICA 'Activo' ---
 
 
     // Si el valor no existe en el objeto para esa clave (y no es 'Activo'), devuelve '-'
