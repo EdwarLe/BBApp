@@ -23,6 +23,7 @@
                     :labelData="columnsHeader"
                     :nameModal="nameModal"
                     :excludeFields="['N°', 'Id', 'Fecha de Creación', 'Fecha de Actualización', 'Activo']" 
+                    :dataKeyMap="clientDataMap"
                     @closeModal="handleCloseModal"
                     @submitData="handleCustomerSubmit" 
                 />

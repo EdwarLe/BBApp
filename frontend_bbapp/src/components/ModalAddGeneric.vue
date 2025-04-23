@@ -53,6 +53,12 @@
             excludeFields: {
                 type: Array,
                 default: () => ['N°', 'Id', 'Fecha de Creación', 'Fecha de Actualización', 'Activo'] // Campos comunes a excluir
+            },
+            // Mapeo de datos para el form
+            dataKeyMap: {
+                type: Object,
+                required: true,
+                default: () => ({})
             }
         })
     
@@ -82,12 +88,23 @@
         // Maneja el envío del formulario
         const handleSubmit = () => {
             console.log(`Datos a enviar para ${props.nameModal}:`, dataCapture.value);
+            
+            const dataTransformed = {};
+
+            for (const dataKey in dataCapture.value) {
+                const dataKeyMap = props.dataKeyMap[dataKey];
+                if (dataKeyMap) {
+                    dataTransformed[dataKeyMap] = dataCapture.value[dataKey];
+                } else {
+                    console.log('no se encontró el mapeo para el campo', dataKey);
+                }
+            }
     
             // 1. Emitir los datos recolectados al componente padre
             // El padre será responsable de la lógica de API, validación específica, etc.
             emit('submitData', {
                 type: props.nameModal, // Opcional: enviar el tipo para que el padre sepa qué hacer
-                data: { ...dataCapture.value } // Enviar una copia para evitar mutaciones inesperadas
+                data: dataTransformed  // Enviar una copia para evitar mutaciones inesperadas
             });
     
             // 2. Limpiar el formulario localmente

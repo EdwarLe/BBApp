@@ -66,6 +66,8 @@ const useData = defineStore('data', {
                 // Asumiendo que postData devuelve los datos de la respuesta en éxito, o undefined/null en error
                 const responseData = await postData(endpoint, dataToSend);
 
+                console.log(responseData)
+
                 if (responseData) {
                     console.log(`Pinia Store: Data posted successfully to ${endpoint}:`, responseData);
                     this.loading = false; // Opcional
