@@ -37,12 +37,13 @@ import { ref, onMounted, computed } from 'vue';
 import ModalAddGeneric from '@/components/ModalAddGeneric.vue';
 import TableData from '@/components/TableData.vue';
 import useData from '@/store/fetchData.js'; // Importa el store
+
 // ---Store ---
 const dataStore = useData(); // Instancia el store
 
 // --- Configuración de la Tabla y Modal ---
 const columnsHeader = ref(['N°', 'Id', 'Nombre', 'Apellido', 'Teléfono', 'Dirección', 'Empresa', 'Fecha de Creación', 'Fecha de Actualización', 'Activo']);
-const clientEndpoint = '/clients'; // Endpoint específico para clientes
+const clientEndpoint = '/clients'; 
 const nameModal = 'Cliente';
 
 // --- Estado Local ---
