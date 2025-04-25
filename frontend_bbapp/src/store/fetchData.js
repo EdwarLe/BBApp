@@ -22,7 +22,7 @@ const useData = defineStore('data', {
         async fetchData(endpoint) {
             this.loading = true; // Opcional: Inicia carga
             this.error = null;   // Opcional: Limpia error previo
-            console.log(`Pinia Store: Fetching data from endpoint: ${endpoint}`); // Log para depuración
+            // console.log(`Pinia Store: Fetching data from endpoint: ${endpoint}`); // Log para depuración
 
             try {
                 // Llama al helper getData, que ya es dinámico
@@ -30,7 +30,7 @@ const useData = defineStore('data', {
 
                 // El helper getData devuelve { data, status } o { status, msg }
                 if (dataFetch.status && dataFetch.data) {
-                    console.log(`Pinia Store: Data received successfully for ${endpoint}`);
+                    // console.log(`Pinia Store: Data received successfully for ${endpoint}`);
                     this.loading = false; // Opcional: Termina carga
                     // RETORNA los datos directamente al componente que llamó la acción
                     return dataFetch.data;
