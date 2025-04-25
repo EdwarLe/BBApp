@@ -25,7 +25,7 @@
                     :excludeFields="['N°', 'Id', 'Fecha de Creación', 'Fecha de Actualización', 'Activo']" 
                     :dataKeyMap="employeeDataMap"
                     @closeModal="handleCloseModal"
-                    @submitData="handleCustomerSubmit" 
+                    @submitData="handleEmployeeSubmit" 
                 />
             </section>
         </section>
@@ -85,7 +85,7 @@ const handleCloseModal = () => {
 };
 
 // ---  Manejador de Envío (POST) ---
-const handleCustomerSubmit = async (payload) => {
+const handleEmployeeSubmit = async (payload) => {
     if (payload.type === nameModal) {
         console.log('Componente: Intentando crear colaborador con datos:', payload.data);
         // Llama a la acción createData del store, pasando endpoint y datos

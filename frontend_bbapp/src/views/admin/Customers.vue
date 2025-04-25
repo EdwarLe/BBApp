@@ -36,10 +36,10 @@
 import { ref, onMounted, computed } from 'vue';
 import ModalAddGeneric from '@/components/ModalAddGeneric.vue';
 import TableData from '@/components/TableData.vue';
-import useData from '@/store/fetchData.js'; // Importa el store
+import useData from '@/store/fetchData.js'; 
 
 // ---Store ---
-const dataStore = useData(); // Instancia el store
+const dataStore = useData(); 
 
 // --- Configuración de la Tabla y Modal ---
 const columnsHeader = ref(['N°', 'Id', 'Nombre', 'Apellido', 'Teléfono', 'Dirección', 'Empresa', 'Fecha de Creación', 'Fecha de Actualización', 'Activo']);
@@ -48,25 +48,24 @@ const nameModal = 'Cliente';
 
 // --- Estado Local ---
 const showModalState = ref(false);
-const clients = ref([]); // Estado local para almacenar los datos de clientes
+const clients = ref([]); 
 
 // --- Carga Inicial de Datos ---
 const loadClients = async () => {
   // Llama a la acción fetchData del store, pasando el endpoint específico
     const fetchedData = await dataStore.fetchData(clientEndpoint);
     if (fetchedData) {
-    // Si la acción retornó datos, actualiza el estado local
     clients.value = fetchedData;
     console.log('Clientes cargados en el componente:', clients.value);
     } else {
-    // Hubo un error (ya logueado en el store), podrías mostrar un mensaje específico aquí
+    
     console.error('Error al cargar clientes en el componente.');
-    clients.value = []; // Asegura que esté vacío si falla
+    clients.value = []; 
     }
 };
 
 onMounted(() => {
-  loadClients(); // Carga los clientes cuando el componente se monta
+  loadClients(); 
 });
 
 const tableKey = ref(0);
@@ -87,18 +86,15 @@ const handleCloseModal = () => {
 const handleCustomerSubmit = async (payload) => {
     if (payload.type === nameModal) {
         console.log('Componente: Intentando crear cliente con datos:', payload.data);
-        // Llama a la acción createData del store, pasando endpoint y datos
+
         const createdClient = await dataStore.createData(clientEndpoint, payload.data); 
         if (createdClient) {
-            // Éxito: La API devolvió el cliente creado (o lo que sea que devuelva tu API)
             console.log('Componente: Cliente creado exitosamente:', createdClient);
             alert(`${nameModal} agregado correctamente!`);
-            // Opcional: Añadir directamente a la lista local o recargar todo
-            // clients.value.push(createdClient); // Añadir si la API devuelve el objeto creado
-            await loadClients(); // Recargar la lista completa desde la API
-            handleCloseModal(); // Cierra el modal en éxito
-
-            forceTableRefresh(); // Cambia la key para forzar el remontaje de TableData
+            
+            await loadClients(); 
+            handleCloseModal(); 
+            forceTableRefresh(); 
         }
 
         else {
