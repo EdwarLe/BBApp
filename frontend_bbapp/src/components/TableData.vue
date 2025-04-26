@@ -24,8 +24,10 @@
 
                 <!-- Celda de Opciones -->
                 <td :class="styleTableData" class="px-6 py-4 text-right space-x-2">
-                    <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Editar</button>
-                    <button class="font-medium text-red-600 dark:text-red-500 hover:underline">Eliminar</button>
+                    <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" 
+                    @click="handleEditar(dataRow)">Editar</button>
+                    <button class="font-medium text-red-600 dark:text-red-500 hover:underline" 
+                    @click="handleDelete(dataRow)">Eliminar</button>
                 </td>
             </tr>
             <!-- Mensaje si no hay datos -->
@@ -36,13 +38,21 @@
             </tr>
         </tbody>
     </table>
+
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
+import { defineProps, defineEmits } from 'vue';
+import useDataRowToEdit from '@/store/dataRowToEdit.js';
+import useClassBoolean from '@/store/classBoolean.js';
+
+const dataRowToEdit = useDataRowToEdit();
+const deleteData = useClassBoolean();
 
 const styleTableHead = 'px-6 py-3 text-center font-bold';
 const styleTableData = 'px-6 py-4';
+
+const emit = defineEmits(['requestEditData', 'requestDeleteData']);
 
 const props = defineProps({
     tableData: {
@@ -108,6 +118,21 @@ const getCellValue = (row, header, rowIndex) => {
 
     // Devuelve el valor sin formato para otras columnas
     return value;
+}
+
+const handleEditar = (row) => {
+    dataRowToEdit.setDataRowToEdit(row);
+    dataRowToEdit.isData = true;
+    // handleShowModal();
+    emit('requestEditData', row);
+    console.log(dataRowToEdit.dataRowToEdit)
 };
+
+const handleDelete = (row) => {
+    console.log('Componente: Intentando eliminar usuario con id:', row.id);
+    deleteData.delete()
+    emit('requestDeleteData', row);
+}
+
 
 </script>

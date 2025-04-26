@@ -4,7 +4,7 @@
             <h3 class="text-xl font-semibold text-indigo-800 mb-2">Usuario</h3>
             <button
                 class="place-self-end mr-4 mb-2 bg-indigo-800 text-white px-4 py-1.5 rounded-full transition-colors border border-transparent shadow-md hover:bg-slate-100 hover:text-indigo-800 hover:border-indigo-800 text-sm font-medium"
-                @click="handleShowModal"
+                @click="localShowModal"
             >
                 + Nuevo Usuario
             </button>
@@ -15,17 +15,20 @@
                     :tableData="users"
                     :columnsHeader='columnsHeader'
                     :dataKeyMap="userDataMap"
-                    :key="tableKey"/>
+                    :key="tableKey"
+                    @requestEditData="localShowModal"
+                    @requestDeleteData="localDeleteData"
+                />
 
                 <!-- *** MODAL *** -->
                 <ModalAddGeneric
-                    v-if="showModalState"
+                    v-if="booleanStore.isOpen"
                     :labelData="columnsHeader"
                     :nameModal="nameModal"
                     :excludeFields="['N°', 'Id', 'Fecha de Creación', 'Fecha de Actualización', 'Activo']" 
                     :dataKeyMap="userDataMap"
-                    @closeModal="handleCloseModal"
-                    @submitData="handleUserSubmit" 
+                    @closeModal="localCloseModal"
+                    @submitData="localHandleSubmit" 
                 />
             </section>
         </section>
@@ -37,68 +40,28 @@ import { ref, onMounted, computed } from 'vue';
 import ModalAddGeneric from '@/components/ModalAddGeneric.vue';
 import TableData from '@/components/TableData.vue';
 import useData from '@/store/fetchData.js';
+import useDataModals from '@/store/dataModals';
+import useClassBoolean from '@/store/classBoolean.js';
+import useDataRowToEdit from '@/store/dataRowToEdit.js';
+import { loadData, forceTableRefresh, postData, putData, deleteData } from '@/utils/handlers.js';
 
 // ---Store ---
 const dataStore = useData();
+const dataModalStore = useDataModals();
+const booleanStore = useClassBoolean();
+const dataRowToEdit = useDataRowToEdit();
 
 // --- Configuración de la Tabla y Modal ---
-const columnsHeader = ['N°', 'Id', 'Nombre', 'Apellido', 'Correo', 'Role', 'Fecha de Creación', 'Fecha de Actualización', 'Activo']
+const columnsHeader = ref(['N°', 'Id', 'Nombre', 'Apellido', 'Correo', 'Role', 'Fecha de Creación', 'Fecha de Actualización', 'Activo'])
 const userEndpoint = '/users'
+const userUpdateEndpoint = '/users/update-user'
+const userDeleteEndpoint = '/users/delete-user'
 const nameModal = 'Usuario'
 
+
 // --- Estado Local ---
-const showModalState = ref(false);
 const users = ref([]);
-
-// --- Carga Inicial de Datos ---
-const loadUsers = async () => {
-    const fetchedData = await dataStore.fetchData(userEndpoint);
-    if (fetchedData) {
-        users.value = fetchedData;
-        console.log('Usuarios cargados en el componente:', users.value);
-    } else {
-        console.error('Error al cargar usuarios en el componente.');
-        users.value = [];
-    }
-    
-};
-
-onMounted(() => {
-    loadUsers(); 
-});
-
 const tableKey = ref(0);
-const forceTableRefresh = () => {
-    tableKey.value += 1;
-}
-
-// --- Manejadores de Eventos del Modal ---
-const handleShowModal = () => {
-    showModalState.value = true;
-};
-
-const handleCloseModal = () => {
-    showModalState.value = false;
-};
-
-// ---  Manejador de Envío (POST) ---
-const handleUserSubmit = async (payload) => {
-    if (payload.type === nameModal) {
-        console.log('Componente: Intentando crear usuario con datos:', payload.data);
-        const createdUser = await dataStore.createData(userEndpoint, payload.data); 
-        if (createdUser) {
-            console.log('Componente: Usuario creado exitosamente:', createdUser);
-            alert(`${nameModal} agregado correctamente!`);
-            await loadUsers(); 
-            handleCloseModal(); 
-            forceTableRefresh(); 
-        }
-
-        else {
-            alert(`Error al guardar ${nameModal}. Revisa la consola para más detalles.`);
-        }
-    }
-}
 
 // Mapeo de datos para el TableData
 const userDataMap = computed(() => ({
@@ -112,5 +75,45 @@ const userDataMap = computed(() => ({
         'Fecha de Actualización': 'updated_at',
         'Activo': 'deleted_at'
 }));
+
+const localLoadUsers = async () => {
+    await loadData(dataStore, userEndpoint, users)
+}
+
+const localForceRefresh = () => {
+    forceTableRefresh(tableKey)
+}
+
+const localShowModal = () => {
+    dataModalStore.setDataColumnHeaderModals(columnsHeader.value, nameModal, userDataMap.value)
+    booleanStore.open();
+}
+
+const localCloseModal = () => {
+    booleanStore.close();
+    dataRowToEdit.clearDataRowToEdit();
+}
+
+// ---  Manejador de Envío (POST) ---
+const localHandleSubmit = async (payload) => {
+    if (dataRowToEdit.isData && payload.id) {
+        putData(payload, dataStore, userUpdateEndpoint, nameModal, localLoadUsers, localCloseModal, localForceRefresh)
+    }
+    else {
+        postData(payload, dataStore, userEndpoint, nameModal, localLoadUsers, localCloseModal, localForceRefresh)
+    }
+}
+
+const localDeleteData = async (payload) => {
+    if (booleanStore.isDelete) {
+    deleteData(payload, dataStore, userDeleteEndpoint, nameModal, localLoadUsers, localCloseModal, localForceRefresh)
+}
+}
+
+onMounted(() => {
+    localLoadUsers()
+});
+
+// dataModalStore.setDataColumnHeaderModals(columnsHeader, nameModal, userDataMap.value)
 
 </script>

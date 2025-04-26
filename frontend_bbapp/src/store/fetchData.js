@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 // Los helpers ya son dinámicos, ¡perfecto!
-import { getData, postData } from '../helpers/getAuth'
+import { getData, postData, putData, deleteData } from '../helpers/getAuth'
 
 const useData = defineStore('data', {
     // El estado 'data' aquí es menos útil si cada vista maneja sus propios datos.
@@ -88,13 +88,79 @@ const useData = defineStore('data', {
                 this.loading = false; // Opcional
                 return null; // Indica fallo al componente
             }
-        }
+        },
 
-        // Podrías añadir acciones similares para PUT (updateData) y DELETE (deleteData)
-        /*
-        async updateData(endpoint, dataToSend) { ... }
-        async deleteData(endpoint) { ... }
-        */
+        async updateData(endpoint, dataToSend, idToUpdate) {
+            this.loading = true; // Opcional
+            this.error = null;   // Opcional
+            console.log(`Pinia Store: Actualizando datos en el endpoint: ${endpoint}`, dataToSend); // Log para depuración
+
+            try {
+                const responseData = await putData(endpoint, dataToSend, idToUpdate);
+
+                if (responseData) {
+                    console.log(`Pinia Store: Datos actualizados en el endpoint: ${endpoint}`, responseData);
+                    this.loading = false; // Opcional
+                    // RETORNA la respuesta directamente al componente
+                    return responseData;
+                } else {
+                    // postData probablemente ya logueado el error, pero indicamos fallo aquí
+                    console.error(`Pinia Store: Error actualizando datos en el endpoint: ${endpoint}. Check helper logs.`);
+                    this.error = 'Error en la solicitud PUT'; // Opcional
+                    this.loading = false; // Opcional
+                    return null; // Indica fallo al componente
+                }
+
+            } catch (error) {
+                // Error inesperado durante la ejecución de postData o procesamiento aquí
+                console.error(`Pinia Store: Unexpected error updating data in ${endpoint}:`, error);
+                this.error = error; // Opcional
+                this.loading = false; // Opcional
+                return null; // Indica fallo al componente
+
+                // Podrías añadir acciones similares para PUT (updateData) y DELETE (deleteData)
+                /*
+                async updateData(endpoint, dataToSend) { ... }
+                async deleteData(endpoint) { ... }
+                */
+            }
+        },
+
+        async deleteData(endpoint, idToDelete) {
+            this.loading = true; // Opcional
+            this.error = null;   // Opcional
+            console.log(`Pinia Store: Eliminando datos en el endpoint: ${endpoint}`, idToDelete); // Log para depuración
+
+            try {
+                const responseData = await deleteData(endpoint, idToDelete);
+
+                if (responseData) {
+                    console.log(`Pinia Store: Datos eliminados en el endpoint: ${endpoint}`, responseData);
+                    this.loading = false; // Opcional
+                    // RETORNA la respuesta directamente al componente
+                    return responseData;
+                } else {
+                    // postData probablemente ya logueado el error, pero indicamos fallo aquí
+                    console.error(`Pinia Store: Error eliminando datos en el endpoint: ${endpoint}. Check helper logs.`);
+                    this.error = 'Error en la solicitud DELETE'; // Opcional
+                    this.loading = false; // Opcional
+                    return null; // Indica fallo al componente
+                }
+
+            } catch (error) {
+                // Error inesperado durante la ejecución de postData o procesamiento aquí
+                console.error(`Pinia Store: Unexpected error deleting data in ${endpoint}:`, error);
+                this.error = error; // Opcional
+                this.loading = false; // Opcional
+                return null; // Indica fallo al componente
+
+                // Podrías añadir acciones similares para PUT (updateData) y DELETE (deleteData)
+                /*
+                async updateData(endpoint, dataToSend) { ... }
+                async deleteData(endpoint) { ... }
+                */
+            }
+        }
     }
 })
 

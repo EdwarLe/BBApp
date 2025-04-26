@@ -5,7 +5,7 @@
                 <span class="absolute top-3 right-3 bg-indigo-800 h-6 w-6 flex items-center justify-center text-white rounded-full transition-colors border border-transparent leading-tight font-bold hover:bg-transparent hover:border-indigo-800 hover:text-indigo-800 cursor-pointer" @click="handleCloseModal">X</span>
     
                 <!-- Título dinámico -->
-                <h2 class="text-indigo-800 font-bold text-xl text-center mt-10">Agregar {{ props.nameModal }}</h2>
+                <h2 class="text-indigo-800 font-bold text-xl text-center mt-10">{{ dataRowToEdit.isData ? 'Editar' : 'Agregar' }} {{ props.nameModal }}</h2>
     
                 <!-- Formulario dinámico -->
                 <form class="w-full max-w-[800px] flex flex-wrap gap-4 items-center justify-center px-4" @submit.prevent="handleSubmit">
@@ -25,7 +25,7 @@
                     <!-- Botón de envío dinámico --> 
                     <div class="w-full flex justify-center mt-4">
                         <button type="submit" class="bg-indigo-800 text-white font-bold px-8 py-1 rounded-full border border-transparent transition-colors hover:border-indigo-800 hover:bg-transparent hover:text-indigo-800">
-                            Agregar {{ props.nameModal }}
+                            {{ dataRowToEdit.isData ? 'Actualizar' : 'Agregar' }} {{ props.nameModal }}
                         </button>
                     </div>
                 </form>
@@ -34,7 +34,10 @@
     </template>
     
     <script setup>
-        import { defineProps, defineEmits, ref, computed } from 'vue'
+        import { defineProps, defineEmits, ref, computed, watchEffect } from 'vue'
+        import useDataRowToEdit from '@/store/dataRowToEdit.js';
+
+        const dataRowToEdit = useDataRowToEdit();
     
         // --- Props ---
         const props = defineProps({
@@ -64,10 +67,8 @@
     
         // --- Emits ---
         const emit = defineEmits(['closeModal', 'submitData'])
-    
-        // --- State ---
-        // Objeto reactivo para almacenar los datos del formulario { campo1: valor1, campo2: valor2 }
-        const dataCapture = ref({})
+
+        let dataCapture = ref({})
     
         // --- Computed ---
         // Calcula los campos que realmente se mostrarán como inputs, filtrando los excluidos
@@ -78,42 +79,61 @@
             return props.labelData.filter(label => !fieldsToExclude.has(label))
         })
     
+        const invertedDataKeyMap = computed(() => {
+            return Object.entries(props.dataKeyMap).reduce((acc, [key, value]) => {
+                if (value) acc[value] = key;
+                return acc;
+            }, {});
+        });
+
+        watchEffect(() => {
+            if (dataRowToEdit.isData && dataRowToEdit.dataRowToEdit) {
+                const initialData = {};
+                for (const backendKey in dataRowToEdit.dataRowToEdit) {
+                    const frontendKey = invertedDataKeyMap.value[backendKey];
+                    if (frontendKey && inputsArray.value.includes(frontendKey)) {
+                        initialData[frontendKey] = dataRowToEdit.dataRowToEdit[backendKey];
+                    }
+                }
+                dataCapture.value = initialData;
+            } else {
+                dataCapture.value = {};
+            }
+        })
+
         // --- Methods ---
         const handleCloseModal = () => {
             // Limpia el formulario al cerrar por si acaso
             dataCapture.value = {};
+            dataRowToEdit.clearDataRowToEdit();
             emit('closeModal')
         }
     
         // Maneja el envío del formulario
         const handleSubmit = () => {
-            console.log(`Datos a enviar para ${props.nameModal}:`, dataCapture.value);
+            console.log(`Datos a enviar para ${props.nameModal}:`, 
+            dataCapture.value);
             
             const dataTransformed = {};
 
-            for (const dataKey in dataCapture.value) {
-                const dataKeyMap = props.dataKeyMap[dataKey];
-                if (dataKeyMap) {
-                    dataTransformed[dataKeyMap] = dataCapture.value[dataKey];
+            for (const frontendKey in dataCapture.value) { 
+                const backendkey = props.dataKeyMap[frontendKey];
+                if (backendkey) {
+                    dataTransformed[backendkey] = dataCapture.value[frontendKey];
                 } else {
-                    console.log('no se encontró el mapeo para el campo', dataKey);
+                    console.log('no se encontró el mapeo para el campo', frontendKey);
                 }
             }
-    
+
             // 1. Emitir los datos recolectados al componente padre
             // El padre será responsable de la lógica de API, validación específica, etc.
             emit('submitData', {
                 type: props.nameModal, // Opcional: enviar el tipo para que el padre sepa qué hacer
-                data: dataTransformed  // Enviar una copia para evitar mutaciones inesperadas
+                data: dataTransformed,  // Enviar una copia para evitar mutaciones inesperadas
+                id: dataRowToEdit.isData ? dataRowToEdit.dataRowToEdit.id : null
             });
-    
-            // 2. Limpiar el formulario localmente
-            dataCapture.value = {};
-    
-            // 3. Cerrar el modal (el padre podría decidir no cerrarlo si hay error)
-            // Si quieres que el padre controle el cierre, comenta la siguiente línea
-            // y haz que el padre llame a handleCloseModal o cambie la v-if/v-show que muestra el modal.
-            emit('closeModal'); // Emitir en lugar de llamar directamente a handleCloseModal para consistencia
+
+            handleCloseModal();
         }
     
     </script>

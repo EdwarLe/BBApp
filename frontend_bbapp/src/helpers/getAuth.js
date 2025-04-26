@@ -50,3 +50,25 @@ export const postData = async (endPoint, dataJson) => {
         console.log(error)
     }
 }
+
+export const putData = async (endPoint, dataJson, id) => {
+    const uri = BASE_URL + endPoint + '/' + id
+
+    try {
+        const { data } = await axios.put(uri, dataJson, id)
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export const deleteData = async (endPoint, id) => {
+    const uri = BASE_URL + endPoint + '/' + id
+
+    try {
+        const { data } = await axios.delete(uri, id)
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
